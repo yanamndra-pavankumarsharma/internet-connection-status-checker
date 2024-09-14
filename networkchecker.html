@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Internet Status Checker</title>
+        <style>
+            .container {
+                background-color: rgba(240, 248, 255, 0.5); /* Added 'rgba' for proper transparency handling */
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
+                max-width: 300px; /* Limiting container width */
+                margin: auto; /* Centering the container horizontally */
+                text-align: center; /* Center the text inside the container */
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Font style */
+            }
+            .status {
+                text-align: left; /* Align status texts to the left */
+            }
+            body {
+                background-image: url("internet.jpg"); /* Background image */
+                background-size: cover; /* Cover the entire viewport */
+                background-position: center; /* Center the background image */
+                background-repeat: no-repeat; /* Prevent image repetition */
+                font-family: Arial, sans-serif; /* Body font style */
+                padding-bottom: 90px; /* Extra space to prevent footer overlap */
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <h2>Internet Connection Status Checker</h2> <!-- Smaller heading for the title -->
+        <div class="status">
+            <p><b>Connection status:</b> <span id="statusText">checking.......</span></p>
+            <p><b>IP address:</b> <span id="ipaddressText">-</span></p>
+            <p><b>Network status:</b> <span id="networkStrengthText">checking.......</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the page to load before checking internet connection
+        window.addEventListener("load", CheckInternetConnection);
+
+        function CheckInternetConnection() {
+            const statusText = document.getElementById('statusText'); // Select status span
+            const ipaddressText = document.getElementById('ipaddressText'); // Select IP address span
+            const networkStrengthText = document.getElementById('networkStrengthText'); // Select network strength span
+
+            statusText.textContent = "checking..."; // Update status text while checking
+
+            // If the browser is online
+            if (navigator.onLine) { 
+                // Fetch the user's public IP address
+                fetch('https://api.ipify.org?format=json')
+                .then(response => response.json()) // Convert response to JSON
+                .then(data => {
+                    ipaddressText.textContent = data.ip; // Display the IP address from the API
+                    statusText.textContent = 'Connected'; // Update the status to 'Connected'
+
+                    // Check the network connection strength using the navigator.connection API
+                    const connection = navigator.connection; 
+                    const networkStrength = connection ? connection.downlink + ' Mbps' : 'unknown'; // Get the downlink speed if available
+                    networkStrengthText.textContent = networkStrength; // Update network strength text
+                })
+                .catch(() => { // If there's an error in fetching data
+                    statusText.textContent = 'Disconnected'; // Display as 'Disconnected'
+                    ipaddressText.textContent = '-'; // Reset IP text
+                    networkStrengthText.textContent = '-'; // Reset network strength text
+                });
+            } else {
+                // If the browser is offline
+                statusText.textContent = 'Disconnected'; // Set status to 'Disconnected'
+                ipaddressText.textContent = '-'; // Reset IP text
+                networkStrengthText.textContent = '-'; // Reset network strength text
+            }
+        }
+    </script>
+</body>    
+</html>
