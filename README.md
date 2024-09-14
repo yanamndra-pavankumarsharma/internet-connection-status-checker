@@ -115,12 +115,4 @@ checkConnection();
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-## Contact
-
-For any questions or suggestions, feel free to open an issue or contact [yourname](mailto:yourname@example.com).
-
----
-
-You can copy this content into a `README.md` file for your GitHub repository. Adjust the sections as needed to fit your project details.
+This project is licensed under the MIT License. See the `LICENSE` file for more details 
