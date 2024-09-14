@@ -108,11 +108,3 @@ setInterval(checkConnection, 5000);
 checkConnection();
 ```
 
-## Customization
-
-- **Interval**: Modify the `setInterval` function in `script.js` to change how frequently the connection status is checked.
-- **URL**: Change the URL in the `fetch` method to check connectivity against a different endpoint.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details 
